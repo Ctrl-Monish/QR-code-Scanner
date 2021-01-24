@@ -3,7 +3,10 @@ package com.internship.qrpayment;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.zxing.Result;
 import com.karumi.dexter.Dexter;
@@ -45,7 +48,19 @@ public class ScannerActivity extends AppCompatActivity  implements ZXingScannerV
 
     @Override
     public void handleResult(Result rawResult) {
-        MainActivity.scantext.setText(rawResult.getText());
+        Intent upiPayIntent = new Intent(Intent.ACTION_VIEW);
+        Uri uri = Uri.parse(rawResult.getText());
+        upiPayIntent.setData(uri);
+
+        // To show a dialog to choose app
+        Intent chooser = Intent.createChooser(upiPayIntent, "Pay with");
+        // check if intent resolves
+        if(null != chooser.resolveActivity(getPackageManager())) {
+            startActivityForResult(chooser, 0);
+        } else {
+            Toast.makeText(ScannerActivity.this,"No UPI app found, please install one to continue",Toast.LENGTH_SHORT).show();
+        }
+        MainActivity.upiId.setText(rawResult.getText());
         onBackPressed();
     }
 

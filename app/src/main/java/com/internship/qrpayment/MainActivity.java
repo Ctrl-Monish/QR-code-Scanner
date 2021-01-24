@@ -3,15 +3,19 @@ package com.internship.qrpayment;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
     Button scanbtn;
-    public static TextView scantext;
+    public static EditText upiId;
 
 
     @Override
@@ -20,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         scanbtn = findViewById(R.id.scan_button);
-        scantext = findViewById(R.id.scan_textView);
+        upiId = findViewById(R.id.scan_textView);
 
         scanbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -28,5 +32,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(),ScannerActivity.class));
             }
         });
+
     }
 }
+
